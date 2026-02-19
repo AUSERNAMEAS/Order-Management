@@ -4,8 +4,11 @@ import { saveAs } from "file-saver";
 import axios from "axios";
 import "../App.css";
 import logo from '../assets/logo.png'
+// we import al the modules,images we will use
 
 export default function App() {
+  // we create an  object that contains all the data
+  //we will work with in the backend
   const [form, setForm] = useState({
     nombre: "",
     usuario: "",
@@ -16,13 +19,15 @@ export default function App() {
     estado: "pendiente",
     tipoEntrega: "personal",
   });
-
+  //nameVariable,updaterFunction, [] means itll start empty
   const [pedidos, setPedidos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [campoBusqueda, setCampoBusqueda] = useState("usuario");
   const [editandoId, setEditandoId] = useState(null);
 
-  const descargarExcel = () => {
+  //we save all the data to export it into a excel
+  const descargarExcel = () => 
+  {
   const datos = pedidos.map((p) => ({
     Pedido: p.pedido,
     Nombre: p.nombre,
@@ -34,11 +39,11 @@ export default function App() {
     Estado: p.estado,
     Entrega: p.tipoEntrega,
   }));
-
+  //create the sheet,then a new book, then link them
   const worksheet = XLSX.utils.json_to_sheet(datos);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Pedidos");
-
+  //we write all the data
   const excelBuffer = XLSX.write(workbook, {
     bookType: "xlsx",
     type: "array",
@@ -47,7 +52,7 @@ export default function App() {
   const data = new Blob([excelBuffer], {
     type: "application/octet-stream",
   });
-
+  //then save it in the computer
   saveAs(data, "Pedidos.xlsx");
 };
 
@@ -58,21 +63,25 @@ export default function App() {
 
   const obtenerPedidos = async () => {
     try {
+      //we use axios to make cleaner the fetchs
       const res = await axios.get("http://localhost:5000/api/pedidos");
-      console.log(res.data);
-      //setPedidos(res.data);
+      //console.log(res.data);
+
+      //if it contains the data from the dataBase
+      //setPedidos will update Pedidos
       if (Array.isArray(res.data)) 
       {
       setPedidos(res.data);
       } 
       else if (Array.isArray(res.data.pedidos)) 
-        {
+      {
       setPedidos(res.data.pedidos);
-     } 
-    else 
+      } 
+      //otherwise itll be empty
+      else 
       {
       setPedidos([]);
-    }
+      }
     } catch (error) {
       console.error("Error obteniendo pedidos:", error);
     }
@@ -83,8 +92,9 @@ export default function App() {
   if (!confirmar) return;
 
   try {
+    //from the backend we delete the order we dont want to be there
     await axios.delete(`http://localhost:5000/api/pedidos/${id}`);
-    obtenerPedidos(); // refresca la tabla
+    obtenerPedidos(); // it refreshes the page again
   } catch (error) {
     console.error("Error eliminando pedido:", error);
   }
@@ -94,16 +104,24 @@ export default function App() {
     if (!form.usuario || !form.detalle) return;
 
     try {
-      if (editandoId) {
+      //if editandoId does exist,that means we are currently editing an order
+      if (editandoId) 
+      {
+        //we update the order and set editandoId to null
+        //to say that now we are creating a new order
         await axios.put(`http://localhost:5000/api/pedidos/${editandoId}`, form);
         setEditandoId(null);
-      } else {
+      } 
+      else 
+      {
+        //we sent all the data to the backend and the add +1 to pedido
+        // to make it a index
         await axios.post("http://localhost:5000/api/pedidos", {
           ...form,
           pedido: pedidos.length + 1,
         });
       }
-
+      //we update the page and clean the form
       obtenerPedidos();
 
       setForm({
@@ -120,14 +138,19 @@ export default function App() {
       console.error("Error guardando pedido:", error);
     }
   };
-
+  //when we are editing an order we set all the field from the form 
+  // the same that the order we are editing and set the ID
   const editarPedido = (pedido) => {
     setForm({ ...pedido });
     setEditandoId(pedido._id);
   };
 
   const pedidosFiltrados = useMemo(() => {
+    //we use memo to optimize 
     return pedidos.filter((p) =>
+      //? its a optional chaining to prevent react from crash
+      // we use a filter where we compare the campoBusqueda and
+      //the busqueda the user made
       p[campoBusqueda]
         ?.toString()
         .toLowerCase()
@@ -142,10 +165,15 @@ export default function App() {
   };
 
   const handleChange = (e) => {
+    //update the from when something changes
+    //and e.target.name means the name of the FIELD
+    //and value the VALUE we are typing right now
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const pedidosOrdenados = [...pedidosFiltrados].sort(
+    //this operacion is for the smallest number to go first 
+    // to order the order in ascending
   (a, b) => Number(a.pedido) - Number(b.pedido)
 );
 

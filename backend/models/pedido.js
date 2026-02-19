@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
-// Esquema de cómo se guardan los pedidos
+// with the connection alr made
+// we define our kinda database but howll it be with object 
+// we use MONGO insted of SQL
+
 const PedidoSchema = new mongoose.Schema(
   {
     pedido: Number,
@@ -8,18 +11,14 @@ const PedidoSchema = new mongoose.Schema(
     usuario: String,
     redes: String,
     detalle: String,
-    total: Number,
     anticipo: Number,
-    estado: {
-      type: String,
-      default: "pendiente",
-    },
-    tipoEntrega: {
-      type: String,
-      default: "personal",
-    },
+    total: Number,
+    estado: String,
+    tipoEntrega: String,
   },
   { timestamps: true }
 );
+
+// then we add a name and created the data base and export it
 
 module.exports = mongoose.model("Pedido", PedidoSchema);
