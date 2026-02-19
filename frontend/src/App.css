@@ -1,0 +1,205 @@
+body {
+  margin: 0;
+  font-family: 'Courier New', Courier, monospace;
+  background: linear-gradient(to bottom right, #e9d5ff, #d8b4fe);
+}
+
+.contenedor {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  
+  position: relative;  /* 👈 IMPORTANTE */
+}
+
+
+.titulo {
+  color: #6b21a8;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* GRID FORM */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.form-grid input,
+.form-grid textarea,
+.form-grid select {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.form-grid input:focus,
+.form-grid textarea:focus,
+.form-grid select:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+}
+
+.form-grid textarea {
+  grid-column: 1 / -1;
+  min-height: 90px;
+  resize: none;
+}
+
+.boton-principal {
+  grid-column: 1 / -1;
+  background: #7e22ce;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.boton-principal:hover {
+  background: #6b21a8;
+  transform: scale(1.02);
+}
+
+/* 🔥 BUSCADOR */
+.buscador {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.buscador select,
+.buscador input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.buscador input {
+  flex: 1;
+}
+
+/* TABLA */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #ede9fe;
+  color: #6b21a8;
+  padding: 12px;
+  text-align: left;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+  background-color: #faf5ff;
+}
+
+/* ESTADOS */
+.estado {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.estado-verde {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.estado-morado {
+  background: #ede9fe;
+  color: #6b21a8;
+}
+
+.estado-amarillo {
+  background: #fef9c3;
+  color: #a16207;
+}
+
+/* BOTON EDITAR */
+.boton-editar {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.boton-editar:hover {
+  transform: scale(1.05);
+}
+
+.boton-eliminar {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.boton-eliminar:hover {
+  background: #b91c1c;
+  transform: scale(1.1);
+}
+
+.contenedor-excel {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.boton-excel {
+  background-color: #4CAF50; /* verde claro */
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.boton-excel:hover {
+  background-color: #45a049;
+}
+
+.Logo {
+  width: 70px;
+  position: absolute;
+  top: 20px;
+  right: 20px;  /* 👈 derecha */
+}
